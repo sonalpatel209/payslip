@@ -22,19 +22,20 @@ public class PayslipApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        this.validateInput(args);
+        double yearlyIncome = NumberUtils.toDouble(args[1]);
+        payslipService.generateMonthlyPayslip(args[0], yearlyIncome);
+    }
+
+    private void validateInput(String... args) {
         if (args == null || args.length != 2) {
             System.out.println("Please provide Name and yearly income to generate monthly payslip.");
             System.exit(0);
         }
-        if (!NumberUtils.isParsable(args[1])) {
+        if (!(NumberUtils.isParsable(args[1]) && NumberUtils.toDouble(args[1]) > 0)) {
             System.out.println("Please provide valid number for yearly income");
             System.exit(0);
         }
-        double yearlyIncome = NumberUtils.toDouble(args[1]);
-
-        payslipService.generateMonthlyPayslip(args[0], yearlyIncome);
-
     }
-
 
 }
