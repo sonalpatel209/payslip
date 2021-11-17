@@ -1,9 +1,11 @@
 # Payslip
 
-Application to generate payslip
+Spring boot application to generate payslip
 
 This project allows users to generate payslip based on user input for name and yearly income.  
 Its spring boot application.
+
+It requires java 8 and Gradle 7.2.
 
 ### Building the Apps
 
