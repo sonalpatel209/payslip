@@ -1,5 +1,6 @@
 package com.myob;
 
+import com.myob.dto.Payslip;
 import com.myob.service.PayslipService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class PayslipApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(PayslipApplication.class);
         app.setBannerMode(Mode.OFF);
+        app.setLogStartupInfo(false);
         app.run(args);
     }
 
@@ -24,7 +26,11 @@ public class PayslipApplication implements CommandLineRunner {
     public void run(String... args) {
         this.validateInput(args);
         double yearlyIncome = NumberUtils.toDouble(args[1]);
-        payslipService.generateMonthlyPayslip(args[0], yearlyIncome);
+        Payslip payslip = payslipService.generateMonthlyPayslip(args[0], yearlyIncome);
+        System.out.println("Monthly Payslip for " + payslip.getName());
+        System.out.println("Gross Monthly Income:" + payslip.getGrossMonthlyIncome());
+        System.out.println("Monthly Income Tax:" + payslip.getMonthlyIncomeTax());
+        System.out.println("Net Monthly Income:" + payslip.getNetMonthlyIncome());
     }
 
     private void validateInput(String... args) {

@@ -1,5 +1,6 @@
 package com.myob.service;
 
+import com.myob.dto.Payslip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ public class PayslipService {
     @Autowired
     private IncomeTaxCalculator incomeTaxCalculator;
 
-    public void generateMonthlyPayslip(String name, double yearlyIncome) {
+    public Payslip generateMonthlyPayslip(String name, double yearlyIncome) {
         double grossMonthlyIncome = 0;
         double monthlyIncomeTax = 0;
         double netMonthlyIncome = 0;
@@ -18,9 +19,12 @@ public class PayslipService {
             monthlyIncomeTax = incomeTaxCalculator.calculateIncomeTax(yearlyIncome);
             netMonthlyIncome = grossMonthlyIncome - monthlyIncomeTax;
         }
-        System.out.println("Monthly Payslip for " + name);
-        System.out.println("Gross Monthly Income:" + grossMonthlyIncome);
-        System.out.println("Monthly Income Tax:" + monthlyIncomeTax);
-        System.out.println("Net Monthly Income:" + netMonthlyIncome);
+        Payslip payslip = new Payslip();
+        payslip.setName(name);
+        payslip.setGrossMonthlyIncome(grossMonthlyIncome);
+        payslip.setMonthlyIncomeTax(monthlyIncomeTax);
+        payslip.setNetMonthlyIncome(netMonthlyIncome);
+
+        return payslip;
     }
 }

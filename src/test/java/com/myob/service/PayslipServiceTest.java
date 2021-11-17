@@ -1,6 +1,7 @@
-package com.myob;
+package com.myob.service;
 
-import com.myob.service.PayslipService;
+import com.myob.PayslipApplication;
+import com.myob.dto.Payslip;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {PayslipApplication.class},
         initializers = ConfigDataApplicationContextInitializer.class)
-class PayslipApplicationTests {
+public class PayslipServiceTest {
 
     @Autowired
     private PayslipService payslipService;
 
     @Test
-    void contextLoads() {
-        assertThat(payslipService).isNotNull();
-        payslipService.generateMonthlyPayslip("sonal", 10000);
+    void generateMonthlyPayslip_negativeamount() {
+        double yearlyIncome = -55;
+        String name = "sonal";
+        Payslip payslip = payslipService.generateMonthlyPayslip(name, yearlyIncome);
+        assertThat(payslip).isNotNull();
+        assertThat(payslip.getMonthlyIncomeTax()).isEqualTo(0);
     }
-
 }
