@@ -9,7 +9,7 @@ Its spring boot application.
 
 Build the jar:
 
-$ gradle build
+$ gradlew build
 
 ### Run it
 
